@@ -33,15 +33,34 @@ export default function Home({ users } : RepositoriesProps) {
     setCurrentPage(0)
   }, [itemsPerPage])
 
+  const [search, setSearch] = useState('')
+  const filteredUsers = search.length > 0
+    ? currentItens.filter(user => user.login.includes(search))
+    : []
+
   return (
     <div>
       <PaginationSelector itemsPerPage={itemsPerPage} setItemsPerPage={setItemsPerPage}/>
-
-      <ul>
-        {currentItens.map(repo => (
-          <li>{repo.login}</li>
-        ))}
-      </ul>
+      <input 
+        type="text"
+        placeholder="Buscar" 
+        onChange={(e) => setSearch(e.target.value)}
+        value={search}
+      />
+      
+      { search.length > 0 ? (
+        <ul>
+          {filteredUsers.map(repo => (
+            <li>{repo.login}</li>
+          ))}
+        </ul>
+      ) : (
+        <ul>
+          {currentItens.map(repo => (
+            <li>{repo.login}</li>
+          ))}
+        </ul>
+      )}
       
       <PaginationComponent pages={pages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
