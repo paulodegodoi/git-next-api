@@ -1,9 +1,13 @@
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps, GetStaticProps } from 'next'
 import Head from 'next/head'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from "react"
+import { useSelector } from 'react-redux'
 
 import { PaginationComponent } from '../components/PaginationComponent'
 import { PaginationSelector } from "../components/PaginationSelector"
+import { selectUser } from '../redux/userSlice'
 
 import styles from '../styles/Home.module.scss'
 
@@ -12,7 +16,8 @@ interface RepositoriesProps {
     login: string,
     id: number,
     avatar: string
-  }[]
+  }[],
+  date: string
 }
 
 interface repositorie {
@@ -23,7 +28,16 @@ interface repositorie {
 
 export default function Home({ users } : RepositoriesProps) {
 
+  const { isLogged } = useSelector(selectUser)
+  console.log(isLogged)
+
   console.log(users)
+
+  // function handleRedirect(user: string) {
+  //   const Router = useRouter()
+
+  //   Router.push(`http://localhost:3000/user/${user}`)
+  // }
 
   // Pagination
   const [itemsPerPage, setItemsPerPage] = useState(5)
@@ -63,11 +77,16 @@ export default function Home({ users } : RepositoriesProps) {
       />
 
       <main className={styles.mainContainer}>
+        
         { search.length > 0 ? (
           <ul>
             {filteredUsers.map(user => (
               <li key={user.id}>
-                <a href={`http://localhost:3000/user/${user.login}`}><img src={user.avatar} alt="" /></a>
+                {/* <a href={`http://localhost:3000/user/${user.login}`}></a> */}
+                {/* onClick={(e) => handleRedirect(user.login)} */}
+                <Link href={`http://localhost:3000/user/${user.login}`}>
+                  <a><img src={user.avatar} alt="" /></a>
+                </Link>
                 <div className={styles.userInfo}>
                   <span>ID: {user.id}</span>
                   <span>{user.login}</span>
@@ -80,7 +99,9 @@ export default function Home({ users } : RepositoriesProps) {
           <ul>
             {currentItens.map(user => (
               <li key={user.id}>
-                <a href={`http://localhost:3000/user/${user.login}`}><img src={user.avatar} alt="" /></a>
+                <Link href={`http://localhost:3000/user/${user.login}`}>
+                  <a><img src={user.avatar} alt="" /></a>
+                </Link>
                 <div className={styles.userInfo}>
                   <span>ID: {user.id}</span>
                   <span>{user.login}</span>
@@ -97,7 +118,7 @@ export default function Home({ users } : RepositoriesProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const response = await fetch('https://api.github.com/users')
   
   const gitUsers: repositorie[] = []
@@ -114,6 +135,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       users: gitUsers
-    }
+    },
+    revalidate: 3600
   }
 }

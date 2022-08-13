@@ -1,0 +1,154 @@
+.layoutContainer {
+  height: 70vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.headerUser {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+
+  .backLink {
+    color: #fff;
+  }
+
+  .pencilIcon {
+    height: 2rem;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
+.mainContainer {
+
+  display: flex;
+
+  img {
+    width: 200px;  
+    border-radius: 8px;
+    box-shadow: 1px 1px 3px 5px rgba(0, 0, 0, 0.3);
+    margin-right: 2rem;
+  }
+  
+  .userInfo {
+    display: flex;
+    flex-direction: column;
+    color: #bbb;
+
+    span, h3 {
+      margin-top: .7rem
+    }
+
+    h3 {
+      color: aliceblue;
+      text-align: center;
+    }
+
+    .login {
+      padding-left: .2rem;
+      font-style: italic;
+    }
+
+    .location {
+      display: flex;
+      align-items: center;
+    }
+
+    .followContainer {
+      margin-top: 2rem;
+
+      span {
+        margin-right: 1.5rem;
+
+        strong {
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+.modalEditUser {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(117, 117, 117, 0.67);
+
+  .infoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 660px;
+    height: 60%;
+    background-color: #CCC;
+    border-radius: 8px;
+
+    input {
+      width: 70%;
+      margin-top: 1rem;
+      height: 2rem;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      padding-left: 1rem;
+      background-color: aliceblue;
+      font-size: 1.1rem;
+    }
+
+    .buttonContainer {
+      width: 70%;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+
+      button {
+        font-size: 1rem;
+        font-weight: bold;
+        width: 100px;
+        padding: .7em;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      .cancel {
+        background-color: red;
+      }
+
+      .save {
+        background-color: #80ff80;
+      }
+    }
+  }
+}
+
+@media (max-width: 1150px) {
+  .mainContainer {
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      margin: 0;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .modalEditUser .infoContainer {
+    width: 80%;
+  }
+}

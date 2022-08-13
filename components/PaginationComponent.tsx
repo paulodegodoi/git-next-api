@@ -12,7 +12,7 @@ export const PaginationComponent = ({pages, currentPage, setCurrentPage} : Pagin
         {Array.from(Array(pages), (item, index) => {
           return (
             <button 
-              style={index === currentPage ? { backgroundColor: "gray"} : undefined}
+              style={index === currentPage ? { backgroundColor: "cornflowerblue"} : undefined}
               value={index} 
               onClick={(e) => setCurrentPage(Number((e.target as HTMLTextAreaElement).value))}>{index + 1}
             </button>
