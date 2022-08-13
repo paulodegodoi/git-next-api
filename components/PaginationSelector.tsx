@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 interface PaginationComponentProps {
   itemsPerPage: number
@@ -8,7 +8,7 @@ interface PaginationComponentProps {
 export const PaginationSelector = ({itemsPerPage, setItemsPerPage} : PaginationComponentProps) => {
     return (
       <div>
-        <span>Itens por página:</span>
+        <span style={ {"marginRight": ".5rem"} }>Itens por página:</span>
         <select value={itemsPerPage} onChange={(e) => setItemsPerPage(Number(e.target.value))}>
           <option value={5}>5</option>
           <option value={15}>10</option>
