@@ -1,0 +1,21 @@
+.container {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+
+  button {
+    background: none;
+    color: #fff;
+  }
+
+  ul {
+    list-style: none;
+    background-color: #ccc;
+    padding: .5rem;
+    border-radius: 8px;
+
+    li {
+      cursor: pointer;
+    }
+  }
+}

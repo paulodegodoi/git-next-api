@@ -2,12 +2,15 @@ import { GetServerSideProps, GetStaticProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { UserCircle } from 'phosphor-react'
 import { useEffect, useState } from "react"
+import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 
 import { PaginationComponent } from '../components/PaginationComponent'
 import { PaginationSelector } from "../components/PaginationSelector"
-import { selectUser } from '../redux/userSlice'
+import { UserLogged } from '../components/UserLogged'
+import { logout, selectUser } from '../redux/userSlice'
 
 import styles from '../styles/Home.module.scss'
 
@@ -28,16 +31,8 @@ interface repositorie {
 
 export default function Home({ users } : RepositoriesProps) {
 
-  const { isLogged } = useSelector(selectUser)
-  console.log(isLogged)
-
-  console.log(users)
-
-  // function handleRedirect(user: string) {
-  //   const Router = useRouter()
-
-  //   Router.push(`http://localhost:3000/user/${user}`)
-  // }
+  const userLogged = useSelector(selectUser)
+  console.log(userLogged)
 
   // Pagination
   const [itemsPerPage, setItemsPerPage] = useState(5)
@@ -57,11 +52,17 @@ export default function Home({ users } : RepositoriesProps) {
     ? currentItens.filter(user => user.login.includes(search))
     : []
 
+
+
   return (
     <div className={styles.homeContainter}>
       <Head>
         <title>Lista de Usuários</title>
       </Head>
+
+      { userLogged.isLogged != false && 
+        <UserLogged />
+      }
 
       <div className={styles.paginationContainer}>
         <PaginationSelector itemsPerPage={itemsPerPage} setItemsPerPage={setItemsPerPage}/>

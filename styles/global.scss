@@ -17,6 +17,20 @@ body {
 
     background-color: #1e1e1e;
     color: aliceblue;
+
+    input, img, button {
+      border-radius: 8px;
+    }
+
+    input {
+      border: none;
+      outline: none;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+    }
 }
 
 

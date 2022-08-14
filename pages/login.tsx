@@ -3,6 +3,8 @@ import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { changeUser } from "../redux/userSlice"
 
+import styles from '../styles/login.module.scss'
+
 export default function SigIn() {
   
   const [name, setName] = useState('')
@@ -14,14 +16,15 @@ export default function SigIn() {
   }
   
   return (
-    <div>
+    <div className={styles.signContainer}>
       <h1>Login</h1>
-        <input 
-          type="text" 
-          placeholder="Nome"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <button onClick={handleLogin}>Login</button>
+      <input
+        className={styles.inputLogin} 
+        type="text" 
+        placeholder="Nome"
+        onChange={(e) => setName(e.target.value)}
+      />
+      <button onClick={handleLogin}>Login</button>
     </div>
   )
 }

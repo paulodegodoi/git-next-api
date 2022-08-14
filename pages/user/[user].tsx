@@ -11,6 +11,7 @@ import { selectUser } from '../../redux/userSlice'
 
 import styles from '../../styles/[user].module.scss'
 import Link from 'next/link'
+import { UserLogged } from '../../components/UserLogged'
 
 export default function Home({ user } : any) {
 
@@ -25,6 +26,8 @@ export default function Home({ user } : any) {
   }, []);
   
   
+  const userLogged = useSelector(selectUser)
+
   const [showModal, setShowModal] = useState(false)
 
   const [userName, setUserName] = useState('')
@@ -39,7 +42,7 @@ export default function Home({ user } : any) {
 
   function handleEditUser() {
     if(isLogged === false) {
-      Router.push('http://localhost:3000/signIn')
+      Router.push('http://localhost:3000/login')
     } else {
       setShowModal(true)
     }
@@ -67,14 +70,26 @@ export default function Home({ user } : any) {
   return (
     <div className={styles.layoutContainer}>
       <Head>
-        <title>Usuário</title>
+        <title>{user.name}</title>
       </Head>
+
+      { userLogged.isLogged != false && 
+        <UserLogged />
+      }
 
       <div className={styles.headerUser}>
 
-        <Link href={'http://localhost:3000'} title='Voltar para usuários' className={styles.backLink}><ArrowCircleLeft size={40} /></Link>
+        <Link 
+          href={'http://localhost:3000'} 
+          title='Voltar para usuários' 
+          className={styles.backLink}
+        >
+          <button className={styles.arrowBackButton}>
+            <ArrowCircleLeft size={40} />
+          </button>
+        </Link>
         <button 
-          className={styles.pencilIcon} 
+          className={styles.pencilButton} 
           title='Editar usuário'
           onClick={(e) => handleEditUser()}  
         >
@@ -114,6 +129,7 @@ export default function Home({ user } : any) {
 
         <div className={styles.modalEditUser}>
           <div className={styles.infoContainer}>
+            <h1>Editar Usuário</h1>
             <input type="text" value={user.id} disabled/>
             <input type="text" value={user.login} disabled/>
             <input 

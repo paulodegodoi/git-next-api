@@ -6,12 +6,13 @@
 }
 
 .paginationContainer {
-  width: 100%;
+  width: 85%;
 
   display: flex;
   justify-content: space-between;
 
   padding: 0 1rem;
+  margin-bottom: 1rem;
 
   select {
     border-radius: 8px;
@@ -20,8 +21,6 @@
   button {
     width: 25px;
     margin: .1rem;
-    border: none;
-    cursor: pointer;
   }
 }
 
@@ -29,10 +28,7 @@
   margin-top: 1rem;
   width: 50%;
   height: 2rem;
-  border-radius: 8px;
   padding-left: 1rem;
-  outline: none;
-  border: none;
   transition: .5s;
 
   &:focus {
@@ -44,7 +40,7 @@
 }
   
 .mainContainer {
-  width: 1200px;
+  max-width: 1200px;
   display: flex;
   justify-content: center;
 
@@ -61,7 +57,6 @@
       display: flex;
       align-items: center;
 
-      // width: 250px;
       margin: 2.5rem;
 
       .userInfo {
@@ -100,9 +95,6 @@
     ul {
 
       li {
-        width: 80%;
-        justify-content: center;
-
         .userInfo {
           font-size: 1.2rem;
         }
