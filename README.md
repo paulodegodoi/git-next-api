@@ -1,4 +1,4 @@
-## GIT NEXT-API
+## GITHUB NEXT-API
 
 #### Projeto Hospedado em https://git-next-api.vercel.app/
 
