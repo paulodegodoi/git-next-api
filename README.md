@@ -12,6 +12,7 @@
 
 - Nextjs
 - TypeScript
+- Redux
 - SASS
 
 #### Página Principal
