@@ -11,12 +11,25 @@ import { UserLogged } from '../../components/UserLogged'
 
 import { ArrowCircleLeft, MapPin, Pencil } from 'phosphor-react'
 import styles from '../../styles/[user].module.scss'
+
 import { baseUrl, gitHubApi } from '../../lib/connect'
 
-export default function Home({ user } : any) {
+interface UserProps {
+  user: {
+    id: number
+    login: string
+    name: string
+    location: string
+    avatar_url: string
+    followers: number
+    following: number
+  }
+}
+
+export default function Home({ user } : UserProps) {
 
   useEffect(() => {
-    const json = localStorage.getItem(user.id)
+    const json = localStorage.getItem((user.id).toString())
 
     if(json != null) {
       const localUser = JSON.parse(json!)

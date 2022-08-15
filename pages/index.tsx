@@ -10,7 +10,7 @@ import { UserLogged } from '../components/UserLogged'
 import { PaginationComponent } from '../components/PaginationComponent'
 import { PaginationSelector } from "../components/PaginationSelector"
 
-import { baseUrl } from '../lib/connect'
+import { baseUrl, gitHubApi } from '../lib/connect'
 
 import styles from '../styles/Home.module.scss'
 
@@ -123,10 +123,10 @@ export const getStaticProps: GetStaticProps = async () => {
   
   const gitUsers: repositorie[] = []
   
-  const response = await fetch(`${baseUrl}/api/userList`)
-  const { list } = await response.json()
+  const response = await fetch(gitHubApi)
+  const data = await response.json()
 
-  list.forEach((item: { login: string, id: number, avatar_url: string }) => gitUsers.push(
+  data.forEach((item: { login: string, id: number, avatar_url: string }) => gitUsers.push(
     {
       'login': item.login, 
       'id': item.id,
