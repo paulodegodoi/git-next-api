@@ -1,17 +1,17 @@
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
-import { userAgent } from 'next/server'
-
+import Link from 'next/link'
 import Router from 'next/router'
 
-import { ArrowCircleLeft, MapPin, Pencil } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/userSlice'
 
-import styles from '../../styles/[user].module.scss'
-import Link from 'next/link'
 import { UserLogged } from '../../components/UserLogged'
+
+import { ArrowCircleLeft, MapPin, Pencil } from 'phosphor-react'
+import styles from '../../styles/[user].module.scss'
+import { baseUrl, gitHubApi } from '../../lib/connect'
 
 export default function Home({ user } : any) {
 
@@ -25,7 +25,6 @@ export default function Home({ user } : any) {
     }
   }, []);
   
-  
   const userLogged = useSelector(selectUser)
 
   const [showModal, setShowModal] = useState(false)
@@ -34,29 +33,29 @@ export default function Home({ user } : any) {
   const [actualUserName, setActualUserName] = useState(userName != '' ? userName : user.name)
   const [actualUserLocation, setActualUserLocation] = useState(user.location)
   const [userLocation, setUserLocation] = useState('')
-
-  console.log(user)
   
   const { isLogged } = useSelector(selectUser)
-  console.log(isLogged)
 
   function handleEditUser() {
     if(isLogged === false) {
-      Router.push('http://localhost:3000/login')
+      Router.push(`${baseUrl}/login`)
     } else {
+      setActualUserName(document.getElementById('userName')?.innerText!)
+      setActualUserLocation(document.getElementById('userLocation')?.innerText!)
+
       setShowModal(true)
     }
   }
 
   function handleCancelEdit() {
     setShowModal(false)
-    setActualUserName(actualUserName)
   }
 
   function handleSaveChanges(id: number) {
     setUserName(actualUserName)
     setUserLocation(actualUserLocation)
 
+    // Save changes on LocalStorage
     const userChanged = {
       name: actualUserName,
       location: actualUserLocation
@@ -68,7 +67,9 @@ export default function Home({ user } : any) {
   }
 
   return (
+
     <div className={styles.layoutContainer}>
+
       <Head>
         <title>{user.name}</title>
       </Head>
@@ -80,7 +81,7 @@ export default function Home({ user } : any) {
       <div className={styles.headerUser}>
 
         <Link 
-          href={'http://localhost:3000'} 
+          href={baseUrl} 
           title='Voltar para usuários' 
           className={styles.backLink}
         >
@@ -97,24 +98,29 @@ export default function Home({ user } : any) {
         </button>
 
       </div>
+      
       <main className={styles.mainContainer}>
 
         <img src={user.avatar_url} alt="" />
 
         <div className={styles.userInfo}>
-          <h3>{ userName != '' ? (userName) : user.name }</h3>
-          <span>ID: {user.id}</span>
+          <h3 id='userName'>{ userName != '' ? (userName) : user.name }</h3>
+          <span>ID: 
+            <strong>{user.id}</strong>
+          </span>
           <span>login: 
             <span 
               className={styles.login}
             >
-              {user.login}
+              <strong>
+                {user.login}
+              </strong>
             </span>
           </span>
           { userLocation != null ? (
-            <span className={styles.location}>
+            <span id='userLocation' className={styles.location}>
               <MapPin size={24} />
-              { userLocation != '' ? (userLocation) : user.location }
+              <strong>{ userLocation != '' ? (userLocation) : user.location }</strong>
             </span>
           ) : null }
           <div className={styles.followContainer}>
@@ -130,12 +136,16 @@ export default function Home({ user } : any) {
         <div className={styles.modalEditUser}>
           <div className={styles.infoContainer}>
             <h1>Editar Usuário</h1>
+            <label>ID</label>
             <input type="text" value={user.id} disabled/>
+            <label>username</label>
             <input type="text" value={user.login} disabled/>
+            <label htmlFor="">Nome</label>
             <input 
               type="text" 
               value={actualUserName}
               onChange={(e) => setActualUserName(e.target.value)}/>
+            <label htmlFor="">Localização</label>
             <input 
               type="text" 
               value={actualUserLocation} 
@@ -146,7 +156,6 @@ export default function Home({ user } : any) {
               <button className={styles.save} onClick={(e) => handleSaveChanges(user.id)}>Salvar</button>
             </div>
           </div>
-          
         </div>
 
       ) : null } 
@@ -157,17 +166,15 @@ export default function Home({ user } : any) {
 }
 
 
-export const getStaticPaths: GetStaticPaths = async (context) => {
+export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [
-      
-    ],
+    paths: [],
     fallback: 'blocking'
   }
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const response = await fetch(`https://api.github.com/users/${context.params!.user}`)
+  const response = await fetch(`${gitHubApi}/${context.params!.user}`)
   
   const data = await response.json()
   

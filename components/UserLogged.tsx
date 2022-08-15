@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 
 import { UserCircle } from 'phosphor-react'
 import { useDispatch } from 'react-redux'
-import { logout } from '../redux/userSlice'
+import { logout, selectUser } from '../redux/userSlice'
 
 import styles from '../styles/UserLogged.module.scss'
 import { useSelector } from 'react-redux'
 
 export const UserLogged = () => {
+
+  const { name } = useSelector(selectUser)
 
   const dispatch = useDispatch()
 
@@ -28,6 +30,7 @@ export const UserLogged = () => {
       </button>
       {showList && (
         <ul>
+          <li>{name}</li>
           <li onClick={handleLogout}>Sair</li>
         </ul>
       )}

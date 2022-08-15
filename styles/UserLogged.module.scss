@@ -1,21 +1,36 @@
 .container {
   position: absolute;
-  top: 1rem;
+  top: 2rem;
   right: 2rem;
 
   button {
+    float: right;
     background: none;
     color: #fff;
   }
 
   ul {
+    margin-top: 1rem;
+    width: 100px;
     list-style: none;
-    background-color: #ccc;
+    background-color: rgba(204, 204, 204, 0.3);
     padding: .5rem;
     border-radius: 8px;
 
     li {
+      margin-bottom: .4rem;
       cursor: pointer;
+
+      &:hover {
+        color: #ccc;
+      }
     }
+  }
+}
+
+@media (max-width: 1150px) {
+  .container {
+    top: .5rem;
+    right: 1rem;
   }
 }

@@ -11,7 +11,8 @@ export const PaginationComponent = ({pages, currentPage, setCurrentPage} : Pagin
       <div>
         {Array.from(Array(pages), (item, index) => {
           return (
-            <button 
+            <button
+              key={index}
               style={index === currentPage ? { backgroundColor: "cornflowerblue"} : undefined}
               value={index} 
               onClick={(e) => setCurrentPage(Number((e.target as HTMLTextAreaElement).value))}>{index + 1}

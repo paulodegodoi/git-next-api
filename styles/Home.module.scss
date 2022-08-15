@@ -3,6 +3,9 @@
   flex-direction: column;
   align-items: center;
   
+  h1 {
+    margin-bottom: 1rem;
+  }
 }
 
 .paginationContainer {
@@ -40,7 +43,7 @@
 }
   
 .mainContainer {
-  max-width: 1200px;
+  width: 1200px;
   display: flex;
   justify-content: center;
 
@@ -89,6 +92,19 @@
 
 
 @media (max-width: 1150px) {
+
+  .homeContainter {
+    
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .paginationContainer {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
   .mainContainer {
     width: 100vw;
 
